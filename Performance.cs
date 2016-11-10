@@ -37,28 +37,34 @@ namespace QuadTreeSample
             const int MAX_SIZE = 1 << 14;
             const int R_SEED = 1;
             const int ITERATIONS = 1000000;
+            const int RUNS = 7;
 
-            Vector2Int pos = new Vector2Int(0, 0);
-            QuadTreeNode q = new QuadTreeNode(pos, MAX_SIZE);
-            Random r = new Random(R_SEED);
 
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
 
-            int j = 1;
-            for( int i = 0; i < ITERATIONS; i++)
+            for (int run = 0; run < RUNS; run++)
             {
-                Vector2Int point = new Vector2Int( r.Next(0, MAX_SIZE-1), r.Next(0, MAX_SIZE - 1) );
-                q.SetFilledPosition(point);
+                Vector2Int pos = new Vector2Int(0, 0);
+                QuadTreeNode q = new QuadTreeNode(pos, MAX_SIZE);
+                Random r = new Random(R_SEED);
+
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+
+                int j = 1;
+                for (int i = 0; i < ITERATIONS; i++)
+                {
+                    Vector2Int point = new Vector2Int(r.Next(0, MAX_SIZE - 1), r.Next(0, MAX_SIZE - 1));
+                    q.SetFilledPosition(point);
+                }
+                /*for (int i = 0; i < ITERATIONS; i++)
+                {
+                    Vector2Int point = new Vector2Int(r.Next(0, MAX_SIZE - 1), r.Next(0, MAX_SIZE - 1));
+                    q.ResetFilledPosition(point);
+                }*/
+
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
             }
-            /*for (int i = 0; i < ITERATIONS; i++)
-            {
-                Vector2Int point = new Vector2Int(r.Next(0, MAX_SIZE - 1), r.Next(0, MAX_SIZE - 1));
-                q.ResetFilledPosition(point);
-            }*/
-            
-            sw.Stop();
-            Console.WriteLine("Elapsed={0}", sw.Elapsed);
         }
 
         static void Main(string[] args)
